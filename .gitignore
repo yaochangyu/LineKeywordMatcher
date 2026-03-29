@@ -1,0 +1,15 @@
+# Build output
+bin/
+obj/
+
+# IDE
+.idea/
+.vs/
+*.user
+
+# Rider / ReSharper
+*.DotSettings.user
+
+# OS
+.DS_Store
+Thumbs.db

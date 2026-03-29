@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/LineKeywordMatcher/LineKeywordMatcher.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/LineKeywordMatcher.Specs/LineKeywordMatcher.Specs.csproj" />
+  </Folder>
+</Solution>

@@ -10,6 +10,9 @@ obj/
 # Rider / ReSharper
 *.DotSettings.user
 
+# SpecFlow generated
+*.feature.cs
+
 # OS
 .DS_Store
 Thumbs.db

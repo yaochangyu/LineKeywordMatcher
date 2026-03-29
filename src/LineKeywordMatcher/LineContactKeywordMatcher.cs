@@ -24,4 +24,10 @@ public static class LineContactKeywordMatcher
         return span.IndexOf("留下line".AsSpan()) >= 0
             || span.IndexOf("留下賴".AsSpan()) >= 0;
     }
+
+    public static bool ContainsLineKeywordInHtml(string html)
+    {
+        var text = HtmlTextExtractor.ExtractText(html);
+        return ContainsLineKeyword(text);
+    }
 }

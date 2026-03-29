@@ -40,7 +40,7 @@ namespace LineKeywordMatcher.Specs.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "LINE 關鍵字偵測", "    身為內容審核人員\r\n    我想要偵測包含 LINE 聯絡方式的訊息\r\n    以便進行審查", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "LINE 關鍵字偵測", "    身為內容審核人員\n    我想要偵測包含 LINE 聯絡方式的訊息\n    以便進行審查", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -122,6 +122,46 @@ namespace LineKeywordMatcher.Specs.Features
         testRunner.When("檢查是否包含 LINE 關鍵字", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
+        testRunner.Then(string.Format("結果應為 {0}", expected), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="偵測 HTML 格式內的 LINE 關鍵字")]
+        [Xunit.TraitAttribute("FeatureTitle", "LINE 關鍵字偵測")]
+        [Xunit.TraitAttribute("Description", "偵測 HTML 格式內的 LINE 關鍵字")]
+        [Xunit.InlineDataAttribute("<b>留下</b>LINE", "true", new string[0])]
+        [Xunit.InlineDataAttribute("留下<span>LINE</span>", "true", new string[0])]
+        [Xunit.InlineDataAttribute("<p>留下賴</p>", "true", new string[0])]
+        [Xunit.InlineDataAttribute("<b>留下</b>&nbsp;LINE", "true", new string[0])]
+        [Xunit.InlineDataAttribute("&lt;留下LINE&gt;", "true", new string[0])]
+        [Xunit.InlineDataAttribute("<p>今天天氣很好</p>", "false", new string[0])]
+        [Xunit.InlineDataAttribute("<b>LINE好用</b>", "false", new string[0])]
+        public void 偵測HTML格式內的LINE關鍵字(string html, string expected, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("html", html);
+            argumentsOfScenario.Add("expected", expected);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("偵測 HTML 格式內的 LINE 關鍵字", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 29
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 30
+        testRunner.Given(string.Format("輸入 HTML 為 \"{0}\"", html), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 31
+        testRunner.When("檢查 HTML 是否包含 LINE 關鍵字", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 32
         testRunner.Then(string.Format("結果應為 {0}", expected), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

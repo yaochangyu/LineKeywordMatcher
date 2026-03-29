@@ -25,3 +25,18 @@ Feature: LINE 關鍵字偵測
             | 今天天氣很好            | false    |
             | LINE好用               | false    |
             | 留下電話               | false    |
+
+    Scenario Outline: 偵測 HTML 格式內的 LINE 關鍵字
+        Given 輸入 HTML 為 "<html>"
+        When 檢查 HTML 是否包含 LINE 關鍵字
+        Then 結果應為 <expected>
+
+        Examples:
+            | html                                  | expected |
+            | <b>留下</b>LINE                       | true     |
+            | 留下<span>LINE</span>                 | true     |
+            | <p>留下賴</p>                         | true     |
+            | <b>留下</b>&nbsp;LINE                 | true     |
+            | &lt;留下LINE&gt;                      | true     |
+            | <p>今天天氣很好</p>                   | false    |
+            | <b>LINE好用</b>                       | false    |

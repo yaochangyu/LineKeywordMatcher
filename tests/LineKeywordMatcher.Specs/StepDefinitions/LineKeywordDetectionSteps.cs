@@ -27,4 +27,16 @@ public class LineKeywordDetectionSteps
     {
         Assert.Equal(expected, _result);
     }
+
+    [Given(@"輸入 HTML 為 ""(.*)""")]
+    public void 輸入HTML為(string html)
+    {
+        _input = html;
+    }
+
+    [When(@"檢查 HTML 是否包含 LINE 關鍵字")]
+    public void 檢查HTML是否包含LINE關鍵字()
+    {
+        _result = LineContactKeywordMatcher.ContainsLineKeywordInHtml(_input);
+    }
 }

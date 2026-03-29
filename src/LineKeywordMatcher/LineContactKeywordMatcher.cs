@@ -1,8 +1,29 @@
 namespace LineKeywordMatcher;
 
-public static class LineContactKeywordMatcher
+public class LineContactKeywordMatcher
 {
-    public static bool ContainsLineKeyword(string input)
+    private readonly string[] _normalizedKeywords;
+
+    public LineContactKeywordMatcher(IEnumerable<string> keywords)
+    {
+        _normalizedKeywords = keywords
+            .Select(k => Normalize(k))
+            .ToArray();
+    }
+
+    public bool ContainsLineKeyword(string input)
+    {
+        var normalized = Normalize(input);
+        return _normalizedKeywords.Any(k => normalized.Contains(k, StringComparison.Ordinal));
+    }
+
+    public bool ContainsLineKeywordInHtml(string html)
+    {
+        var text = HtmlTextExtractor.ExtractText(html);
+        return ContainsLineKeyword(text);
+    }
+
+    private static string Normalize(string input)
     {
         Span<char> buffer = stackalloc char[input.Length];
         var len = 0;
@@ -19,15 +40,6 @@ public static class LineContactKeywordMatcher
             buffer[len++] = char.ToLowerInvariant(ch);
         }
 
-        var span = buffer[..len];
-
-        return span.IndexOf("留下line".AsSpan()) >= 0
-            || span.IndexOf("留下賴".AsSpan()) >= 0;
-    }
-
-    public static bool ContainsLineKeywordInHtml(string html)
-    {
-        var text = HtmlTextExtractor.ExtractText(html);
-        return ContainsLineKeyword(text);
+        return buffer[..len].ToString();
     }
 }

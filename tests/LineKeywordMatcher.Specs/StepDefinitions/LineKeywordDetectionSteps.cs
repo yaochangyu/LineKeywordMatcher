@@ -7,6 +7,8 @@ namespace LineKeywordMatcher.Specs.StepDefinitions;
 [Binding]
 public class LineKeywordDetectionSteps
 {
+    private static readonly LineContactKeywordMatcher Matcher = new(["留下line", "留下賴"]);
+
     private string _input = string.Empty;
     private bool _result;
 
@@ -19,7 +21,7 @@ public class LineKeywordDetectionSteps
     [When(@"檢查是否包含 LINE 關鍵字")]
     public void 檢查是否包含LINE關鍵字()
     {
-        _result = LineContactKeywordMatcher.ContainsLineKeyword(_input);
+        _result = Matcher.ContainsLineKeyword(_input);
     }
 
     [Then(@"結果應為 (.*)")]
@@ -37,6 +39,7 @@ public class LineKeywordDetectionSteps
     [When(@"檢查 HTML 是否包含 LINE 關鍵字")]
     public void 檢查HTML是否包含LINE關鍵字()
     {
-        _result = LineContactKeywordMatcher.ContainsLineKeywordInHtml(_input);
+        _result = Matcher.ContainsLineKeywordInHtml(_input);
     }
 }
+

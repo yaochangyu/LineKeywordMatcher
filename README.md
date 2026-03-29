@@ -17,14 +17,31 @@
 
 ## 使用方式
 
+建立 matcher 時注入關鍵字，關鍵字來源可自由決定（設定檔、DB、Redis 等）。
+
 ```csharp
+// 建立 matcher，注入關鍵字
+var matcher = new LineContactKeywordMatcher(["留下line", "留下賴"]);
+
 // 純文字
-bool result = LineContactKeywordMatcher.ContainsLineKeyword("請留下LINE聯絡");
+bool result = matcher.ContainsLineKeyword("請留下LINE聯絡");
 // → true
 
 // HTML
-bool result = LineContactKeywordMatcher.ContainsLineKeywordInHtml("<b>留下</b>&nbsp;LINE");
+bool result = matcher.ContainsLineKeywordInHtml("<b>留下</b>&nbsp;LINE");
 // → true
+```
+
+搭配 DI 容器（以 ASP.NET Core 為例）：
+
+```csharp
+// Program.cs
+builder.Services.AddSingleton(sp =>
+{
+    var keywords = sp.GetRequiredService<IConfiguration>()
+                     .GetSection("LineKeywords").Get<string[]>()!;
+    return new LineContactKeywordMatcher(keywords);
+});
 ```
 
 ## 執行測試

@@ -1,0 +1,54 @@
+# LineKeywordMatcher
+
+偵測文字或 HTML 中是否含有要求留下 LINE 聯絡方式的關鍵字，用於內容審核情境。
+
+## 功能
+
+- 偵測純文字中的 LINE 關鍵字
+- 偵測 HTML 內容中的 LINE 關鍵字（支援標籤、HTML entities）
+- 正規化處理：忽略空白、全形轉半形、大小寫不敏感
+
+## 偵測規則
+
+| 關鍵字 | 範例 |
+|--------|------|
+| 留下LINE（各種大小寫／全形）| `留下LINE`、`留下ｌｉｎｅ`、`留下 Ｌｉｎｅ` |
+| 留下賴 | `留下賴`、`留 下 賴` |
+
+## 使用方式
+
+```csharp
+// 純文字
+bool result = LineContactKeywordMatcher.ContainsLineKeyword("請留下LINE聯絡");
+// → true
+
+// HTML
+bool result = LineContactKeywordMatcher.ContainsLineKeywordInHtml("<b>留下</b>&nbsp;LINE");
+// → true
+```
+
+## 執行測試
+
+```bash
+dotnet test
+```
+
+## 專案結構
+
+```
+src/
+└── LineKeywordMatcher/
+    ├── LineContactKeywordMatcher.cs   # 主要比對邏輯
+    └── HtmlTextExtractor.cs           # HTML 轉純文字
+
+tests/
+└── LineKeywordMatcher.Specs/
+    ├── Features/LineKeywordDetection.feature   # BDD 測試情境
+    └── StepDefinitions/                        # SpecFlow 步驟定義
+```
+
+## 技術
+
+- .NET 8
+- [HtmlAgilityPack](https://html-agility-pack.net/) — HTML 解析
+- [SpecFlow](https://specflow.org/) + xUnit — BDD 測試
